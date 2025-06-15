@@ -1,0 +1,11 @@
+.help-section {
+  @apply mt-6 bg-gray-800 text-white rounded-xl p-4;
+  
+  .title {
+    @apply font-semibold mb-2;
+  }
+  
+  .help-list {
+    @apply text-sm space-y-1 text-gray-300;
+  }
+}

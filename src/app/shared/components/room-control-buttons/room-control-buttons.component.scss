@@ -1,0 +1,23 @@
+.control-buttons {
+  @apply flex justify-center space-x-4 mt-6;
+  
+  button {
+    @apply flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors;
+  }
+  
+  .add-button {
+    @apply bg-green-500 hover:bg-green-600 text-white;
+  }
+  
+  .remove-button {
+    @apply bg-red-500 hover:bg-red-600 text-white;
+    
+    &.disabled {
+      @apply bg-gray-300 text-gray-500 cursor-not-allowed;
+    }
+  }
+  
+  .button-icon {
+    @apply text-lg font-bold;
+  }
+}

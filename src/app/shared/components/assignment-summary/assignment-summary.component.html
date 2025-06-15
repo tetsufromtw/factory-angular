@@ -1,0 +1,12 @@
+<div class="summary-container">
+  <h3 class="title">配置サマリー</h3>
+  <div class="summary-grid">
+    <div 
+      *ngFor="let data of roomsData" 
+      class="summary-item"
+      [ngClass]="getSummaryColor(data.room.color)">
+      <div class="count">{{ data.count }}</div>
+      <div class="room-name">{{ getRoomDisplayName(data.room) }}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="assignment-board">
+  <div class="container">
+    <!-- ヘッダー -->
+    <app-header [totalMembers]="getTotalMembers()"></app-header>
+
+    <!-- メインコンテンツ -->
+    <div class="main-content">
+      <!-- 待機所エリア -->
+      <div class="waiting-area">
+        <app-cdk-room-container
+          [room]="getWaitingRoom()"
+          [members]="getWaitingMembers()"
+          [connectedDropLists]="connectedDropLists"
+          (cdkDropListDropped)="onDrop($event)"
+          (cdkDragStarted)="onDragStarted($event)"
+          (cdkDragEnded)="onDragEnded($event)"
+          (cdkDragEntered)="onDragEntered($event)">
+        </app-cdk-room-container>
+      </div>
+
+      <!-- 部屋エリア -->
+      <div class="rooms-area">
+        <div class="rooms-grid">
+          <app-cdk-room-container
+            *ngFor="let roomEntry of getNonWaitingRooms()"
+            [room]="roomEntry[1]"
+            [members]="getRoomMembers(roomEntry[0])"
+            [connectedDropLists]="connectedDropLists"
+            (cdkDropListDropped)="onDrop($event)"
+            (cdkDragStarted)="onDragStarted($event)"
+            (cdkDragEnded)="onDragEnded($event)"
+            (cdkDragEntered)="onDragEntered($event)">
+          </app-cdk-room-container>
+        </div>
+        
+        <!-- 部屋制御ボタン -->
+        <app-room-control-buttons 
+          [canRemove]="canRemoveRoom()"
+          (addRoom)="onAddRoom()"
+          (removeRoom)="onRemoveRoom()">
+        </app-room-control-buttons>
+      </div>
+    </div>
+
+    <!-- 配置サマリー -->
+    <app-assignment-summary [roomsData]="getSummaryData()"></app-assignment-summary>
+
+    <!-- スタッフ管理セクション -->
+    <app-staff-management 
+      [employees]="getAllEmployees()"
+      (addEmployee)="onAddEmployee($event)"
+      (removeEmployee)="onRemoveEmployee($event)">
+    </app-staff-management>
+
+    <!-- ヘルプセクション -->
+    <app-help-section></app-help-section>
+  </div>
+</div>

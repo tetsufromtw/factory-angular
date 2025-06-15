@@ -1,0 +1,15 @@
+.header {
+  @apply mb-8;
+  
+  .title {
+    @apply text-3xl font-bold text-gray-900 mb-2;
+  }
+  
+  .info {
+    @apply flex items-center space-x-4 text-sm text-gray-600;
+    
+    .date-info, .member-info {
+      @apply flex items-center space-x-1;
+    }
+  }
+}

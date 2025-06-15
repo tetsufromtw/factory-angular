@@ -1,0 +1,28 @@
+<div 
+  class="member-card"
+  cdkDrag
+  (cdkDragStarted)="onDragStarted($event)"
+  (cdkDragEnded)="onDragEnded($event)">
+  
+  <!-- ドラッグハンドル（カード全体がドラッグ可能） -->
+  <div class="card-content">
+    <div class="avatar">
+      {{ member.avatar }}
+    </div>
+    <div class="info">
+      <div class="name">{{ member.name }}</div>
+      <div class="position">{{ member.position }}</div>
+    </div>
+  </div>
+
+  <!-- ドラッグプレビュー（ドラッグ中に表示される要素） -->
+  <div class="member-card drag-preview" *cdkDragPreview>
+    <div class="avatar">
+      {{ member.avatar }}
+    </div>
+    <div class="info">
+      <div class="name">{{ member.name }}</div>
+      <div class="position">{{ member.position }}</div>
+    </div>
+  </div>
+</div>

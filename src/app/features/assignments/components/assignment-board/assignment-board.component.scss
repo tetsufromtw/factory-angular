@@ -1,0 +1,23 @@
+.assignment-board {
+  @apply min-h-screen bg-gray-50 p-6;
+  
+  .container {
+    @apply max-w-7xl mx-auto;
+  }
+  
+  .main-content {
+    @apply grid grid-cols-1 lg:grid-cols-3 gap-6;
+    
+    .waiting-area {
+      @apply lg:col-span-1;
+    }
+    
+    .rooms-area {
+      @apply lg:col-span-2;
+      
+      .rooms-grid {
+        @apply grid grid-cols-1 gap-6;
+      }
+    }
+  }
+}

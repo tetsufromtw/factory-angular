@@ -1,0 +1,17 @@
+<div class="control-buttons">
+  <button 
+    class="add-button"
+    (click)="onAddRoom()">
+    <span class="button-icon">+</span>
+    <span>部屋を追加</span>
+  </button>
+  
+  <button 
+    class="remove-button"
+    [class.disabled]="!canRemove"
+    [disabled]="!canRemove"
+    (click)="onRemoveRoom()">
+    <span class="button-icon">−</span>
+    <span>部屋を削除</span>
+  </button>
+</div>

@@ -1,0 +1,68 @@
+.room-container {
+  @apply border-2 border-dashed rounded-xl p-6 min-h-[24rem];
+}
+
+.room-header {
+  @apply flex items-center space-x-2 mb-4;
+  
+  .icon {
+    @apply w-8 h-8 rounded-full flex items-center justify-center;
+  }
+  
+  .title {
+    @apply text-xl font-semibold text-gray-800;
+  }
+  
+  .badge {
+    @apply text-sm px-2 py-1 rounded-full;
+  }
+}
+
+.members-container {
+  // CDK Drop List の基本スタイル
+  &.drop-list {
+    min-height: 200px;
+    transition: all 0.2s ease;
+    
+    .members-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    
+    .empty-state {
+      @apply text-center text-gray-400 py-8;
+      
+      .sub-message {
+        @apply text-sm;
+      }
+    }
+  }
+
+  // ドラッグオーバー時のスタイル
+  &.cdk-drop-list-dragging {
+    background-color: rgba(59, 130, 246, 0.05);
+    border-color: #3b82f6;
+  }
+
+  // 満員の部屋のスタイル
+  &.drop-list-full {
+    opacity: 0.6;
+    
+    &.cdk-drop-list-dragging {
+      background-color: rgba(239, 68, 68, 0.05);
+      border-color: #ef4444;
+    }
+  }
+}
+
+// ドラッグ中のプレースホルダー
+.cdk-drag-placeholder {
+  opacity: 0.3;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// ドラッグ中のアニメーション
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
