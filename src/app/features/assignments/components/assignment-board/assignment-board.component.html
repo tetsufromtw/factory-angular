@@ -7,37 +7,54 @@
     <div class="main-content">
       <!-- 待機所エリア -->
       <div class="waiting-area">
-        <app-cdk-room-container
-          [room]="getWaitingRoom()"
-          [members]="getWaitingMembers()"
-          [connectedDropLists]="connectedDropLists"
-          (cdkDropListDropped)="onDrop($event)"
-          (cdkDragStarted)="onDragStarted($event)"
-          (cdkDragEnded)="onDragEnded($event)"
-          (cdkDragEntered)="onDragEntered($event)">
+        <app-cdk-room-container [room]="getWaitingRoom()" [members]="getWaitingMembers()">
+          <div class="members-container" cdkDropList [id]="getWaitingRoom().id" [cdkDropListData]="getWaitingMembers()"
+            [cdkDropListConnectedTo]="connectedDropLists" [cdkDropListEnterPredicate]="canDrop"
+            [ngClass]="getDropListClass(getWaitingRoom().id)" (cdkDropListDropped)="onDrop($event)"
+            (cdkDropListEntered)="onDragEntered($event)">
+            <div *ngIf="getWaitingMembers().length > 0" class="members-grid">
+              <app-cdk-member-card *ngFor="let member of getWaitingMembers(); trackBy: trackByMemberId"
+                [member]="member" (cdkDragStarted)="onDragStarted($event)"
+                (cdkDragEnded)="onDragEnded($event)"></app-cdk-member-card>
+            </div>
+            <div *ngIf="getWaitingMembers().length === 0" class="empty-state">
+              {{ getEmptyMessage(getWaitingRoom()) }}
+              <br *ngIf="getEmptySubMessage(getWaitingRoom())">
+              <span *ngIf="getEmptySubMessage(getWaitingRoom())" class="sub-message">
+                {{ getEmptySubMessage(getWaitingRoom()) }}
+              </span>
+            </div>
+          </div>
         </app-cdk-room-container>
       </div>
 
       <!-- 部屋エリア -->
       <div class="rooms-area">
         <div class="rooms-grid">
-          <app-cdk-room-container
-            *ngFor="let roomEntry of getNonWaitingRooms()"
-            [room]="roomEntry[1]"
-            [members]="getRoomMembers(roomEntry[0])"
-            [connectedDropLists]="connectedDropLists"
-            (cdkDropListDropped)="onDrop($event)"
-            (cdkDragStarted)="onDragStarted($event)"
-            (cdkDragEnded)="onDragEnded($event)"
-            (cdkDragEntered)="onDragEntered($event)">
+          <app-cdk-room-container *ngFor="let roomEntry of getNonWaitingRooms()" [room]="roomEntry[1]"
+            [members]="getRoomMembers(roomEntry[0])">
+            <div class="members-container" cdkDropList [id]="roomEntry[0]"
+              [cdkDropListData]="getRoomMembers(roomEntry[0])" [cdkDropListConnectedTo]="connectedDropLists"
+              [cdkDropListEnterPredicate]="canDrop" [ngClass]="getDropListClass(roomEntry[0])"
+              (cdkDropListDropped)="onDrop($event)" (cdkDropListEntered)="onDragEntered($event)">
+              <div *ngIf="getRoomMembers(roomEntry[0]).length > 0" class="members-grid">
+                <app-cdk-member-card *ngFor="let member of getRoomMembers(roomEntry[0]); trackBy: trackByMemberId"
+                  [member]="member" (cdkDragStarted)="onDragStarted($event)"
+                  (cdkDragEnded)="onDragEnded($event)"></app-cdk-member-card>
+              </div>
+              <div *ngIf="getRoomMembers(roomEntry[0]).length === 0" class="empty-state">
+                {{ getEmptyMessage(roomEntry[1]) }}
+                <br *ngIf="getEmptySubMessage(roomEntry[1])">
+                <span *ngIf="getEmptySubMessage(roomEntry[1])" class="sub-message">
+                  {{ getEmptySubMessage(roomEntry[1]) }}
+                </span>
+              </div>
+            </div>
           </app-cdk-room-container>
         </div>
-        
+
         <!-- 部屋制御ボタン -->
-        <app-room-control-buttons 
-          [canRemove]="canRemoveRoom()"
-          (addRoom)="onAddRoom()"
-          (removeRoom)="onRemoveRoom()">
+        <app-room-control-buttons [canRemove]="canRemoveRoom()" (addRoom)="onAddRoom()" (removeRoom)="onRemoveRoom()">
         </app-room-control-buttons>
       </div>
     </div>
@@ -46,9 +63,7 @@
     <app-assignment-summary [roomsData]="getSummaryData()"></app-assignment-summary>
 
     <!-- スタッフ管理セクション -->
-    <app-staff-management 
-      [employees]="getAllEmployees()"
-      (addEmployee)="onAddEmployee($event)"
+    <app-staff-management [employees]="getAllEmployees()" (addEmployee)="onAddEmployee($event)"
       (removeEmployee)="onRemoveEmployee($event)">
     </app-staff-management>
 

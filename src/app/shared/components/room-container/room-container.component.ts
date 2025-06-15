@@ -11,20 +11,20 @@ import { CommonModule } from '@angular/common';
   selector: 'app-cdk-room-container',
   templateUrl: './room-container.component.html',
   styleUrls: ['./room-container.component.scss'],
-  imports: [CommonModule,DragDropModule, MemberCardComponent]
+  imports: [CommonModule, DragDropModule, MemberCardComponent]
 })
 export class RoomContainerComponent {
   @Input() room!: Room;
   @Input() members!: Employee[];
   @Input() connectedDropLists: string[] = [];
-  
+
   // CDK Drag Drop イベント
   @Output() cdkDropListDropped = new EventEmitter<CdkDragDrop<Employee[]>>();
   @Output() cdkDragStarted = new EventEmitter<any>();
   @Output() cdkDragEnded = new EventEmitter<any>();
   @Output() cdkDragEntered = new EventEmitter<any>();
 
-  constructor(private roomService: RoomService) {}
+  constructor(private roomService: RoomService) { }
 
   // 部屋の色クラスを取得
   getColorClasses(): string {
@@ -49,10 +49,12 @@ export class RoomContainerComponent {
 
   // 容量表示テキストを取得
   getCapacityText(): string {
-    return this.room.capacity === Infinity 
-      ? `${this.members.length}名` 
-      : `${this.members.length}/${this.room.capacity}名`;
+    const count = this.members?.length ?? 0;
+    return this.room.capacity === Infinity
+      ? `${count}名`
+      : `${count}/${this.room.capacity}名`;
   }
+
 
   // 空の状態のメッセージを取得
   getEmptyMessage(): string {
@@ -102,13 +104,17 @@ export class RoomContainerComponent {
   // ドラッグ中の視覚的フィードバック用クラス
   getDropListClass(): string {
     let baseClass = 'drop-list';
-    
-    if (this.room.capacity !== Infinity && this.members.length >= this.room.capacity) {
+
+    if (
+      this.room.capacity !== Infinity &&
+      (this.members?.length ?? 0) >= this.room.capacity
+    ) {
       baseClass += ' drop-list-full';
     }
-    
+
     return baseClass;
   }
+
 
   // TrackBy関数（パフォーマンス最適化）
   trackByMemberId(index: number, member: Employee): number {

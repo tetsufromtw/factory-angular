@@ -23,8 +23,10 @@ export class RoomService {
 
   // 部屋の容量状況を取得
   getRoomCapacityStatus(room: Room, members: Employee[]): { isFull: boolean; isNearFull: boolean } {
-    const isFull = members.length >= room.capacity;
-    const isNearFull = members.length >= room.capacity * 0.8;
+    const memberCount = members?.length ?? 0;
+    const isFull = memberCount >= room.capacity;
+    const isNearFull = memberCount >= room.capacity * 0.8;
+
     return { isFull, isNearFull };
   }
 
@@ -34,7 +36,7 @@ export class RoomService {
     const roomName = `部屋${String.fromCharCode(67 + roomCount - 3)}`;
     const colors = ['purple', 'orange', 'pink', 'indigo', 'teal', 'red'];
     const color = colors[(roomCount - 3) % colors.length];
-    
+
     return RoomModel.create(roomId, roomName, 6, color);
   }
 

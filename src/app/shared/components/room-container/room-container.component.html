@@ -1,19 +1,19 @@
-<div 
-  class="room-container"
-  [ngClass]="getColorClasses()">
-  
+<div class="room-container" [ngClass]="getColorClasses()">
+
   <div class="room-header">
     <div class="icon" [ngClass]="getIconBgColor()">
       <!-- Users icon for waiting room, MapPin for others -->
-      <svg *ngIf="isWaitingRoom()" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      <svg *ngIf="isWaitingRoom()" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" class="text-white">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
       </svg>
-      <svg *ngIf="!isWaitingRoom()" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-        <circle cx="12" cy="10" r="3"/>
+      <svg *ngIf="!isWaitingRoom()" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" class="text-white">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+        <circle cx="12" cy="10" r="3" />
       </svg>
     </div>
     <h2 class="title">{{ room.name }}</h2>
@@ -23,29 +23,19 @@
   </div>
 
   <!-- CDK Drop List Container -->
-  <div 
-    class="members-container"
-    cdkDropList
-    [id]="room.id"
-    [cdkDropListData]="members"
-    [cdkDropListConnectedTo]="connectedDropLists"
-    [cdkDropListEnterPredicate]="canDrop"
-    [ngClass]="getDropListClass()"
-    (cdkDropListDropped)="onDropped($event)"
-    (cdkDropListEntered)="onDragEntered($event)">
-    
+  <div class="members-container" cdkDropList [id]="room.id" [cdkDropListData]="members"
+    [cdkDropListConnectedTo]="connectedDropLists" [cdkDropListEnterPredicate]="canDrop" [ngClass]="getDropListClass()"
+    (cdkDropListDropped)="onDropped($event)" (cdkDropListEntered)="onDragEntered($event)">
+
     <!-- メンバーカード -->
-    <div *ngIf="members.length > 0" class="members-grid">
-      <app-cdk-member-card 
-        *ngFor="let member of members; trackBy: trackByMemberId" 
-        [member]="member"
-        (cdkDragStarted)="onDragStarted($event)"
-        (cdkDragEnded)="onDragEnded($event)">
+    <div *ngIf="(members?.length || 0) > 0" class="members-grid">
+      <app-cdk-member-card *ngFor="let member of members; trackBy: trackByMemberId" [member]="member"
+        (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
       </app-cdk-member-card>
     </div>
-    
+
     <!-- 空の状態 -->
-    <div *ngIf="members.length === 0" class="empty-state">
+    <div *ngIf="(members?.length || 0) === 0" class="empty-state">
       {{ getEmptyMessage() }}
       <br *ngIf="getEmptySubMessage()">
       <span *ngIf="getEmptySubMessage()" class="sub-message">

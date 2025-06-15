@@ -3,6 +3,7 @@ import { Employee } from '../../../core/models/employee.model';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
+  standalone: true,
   selector: 'app-cdk-member-card',
   templateUrl: './member-card.component.html',
   styleUrls: ['./member-card.component.scss'],
@@ -10,7 +11,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 })
 export class MemberCardComponent {
   @Input() member!: Employee;
-  
+
   // CDK Drag イベント
   @Output() cdkDragStarted = new EventEmitter<any>();
   @Output() cdkDragEnded = new EventEmitter<any>();
